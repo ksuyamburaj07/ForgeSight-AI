@@ -1,0 +1,21 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+data/*
+!data/.gitkeep
+models/*
+!models/.gitkeep
+reports/*
+!reports/.gitkeep
+.env
+.env.*
+
+# Unreviewed research notebooks; curate before public release
+notebooks/
+
+# Downloaded research and evidence archives
+*.zip
