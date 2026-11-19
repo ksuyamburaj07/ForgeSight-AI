@@ -1,0 +1,173 @@
+{
+  "schema_version": 1,
+  "title": "ForgeSight Paired Research Comparison",
+  "study_type": "descriptive_retrospective_paired_score_audit",
+  "independent_evaluation": false,
+  "new_model_inference": false,
+  "thresholds_recalibrated": false,
+  "cohort": {
+    "total": 802,
+    "defect_labelled": 400,
+    "normal_labelled": 402
+  },
+  "models": {
+    "high_resolution": {
+      "label": "High-resolution DINOv2",
+      "research_identifier": "M3.12A"
+    },
+    "tiled": {
+      "label": "Earlier tiled DINOv2",
+      "research_identifier": "M3.8"
+    }
+  },
+  "categories": {
+    "pcb1": {
+      "cohort_images": 200,
+      "defect_labelled": 100,
+      "normal_labelled": 100,
+      "high_resolution": {
+        "TP": 95,
+        "FN": 5,
+        "FP": 31,
+        "TN": 69
+      },
+      "tiled": {
+        "TP": 47,
+        "FN": 53,
+        "FP": 0,
+        "TN": 100
+      },
+      "paired": {
+        "defect_both_detect": 46,
+        "defect_both_miss": 4,
+        "defect_new_only": 49,
+        "defect_tiled_only": 1,
+        "normal_both_accepted": 69,
+        "normal_both_flagged": 0,
+        "normal_new_only_false_alarm": 31,
+        "normal_tiled_only_false_alarm": 0
+      }
+    },
+    "pcb2": {
+      "cohort_images": 200,
+      "defect_labelled": 100,
+      "normal_labelled": 100,
+      "high_resolution": {
+        "TP": 63,
+        "FN": 37,
+        "FP": 17,
+        "TN": 83
+      },
+      "tiled": {
+        "TP": 51,
+        "FN": 49,
+        "FP": 8,
+        "TN": 92
+      },
+      "paired": {
+        "defect_both_detect": 48,
+        "defect_both_miss": 34,
+        "defect_new_only": 15,
+        "defect_tiled_only": 3,
+        "normal_both_accepted": 82,
+        "normal_both_flagged": 7,
+        "normal_new_only_false_alarm": 10,
+        "normal_tiled_only_false_alarm": 1
+      }
+    },
+    "pcb3": {
+      "cohort_images": 201,
+      "defect_labelled": 100,
+      "normal_labelled": 101,
+      "high_resolution": {
+        "TP": 50,
+        "FN": 50,
+        "FP": 5,
+        "TN": 96
+      },
+      "tiled": {
+        "TP": 38,
+        "FN": 62,
+        "FP": 2,
+        "TN": 99
+      },
+      "paired": {
+        "defect_both_detect": 29,
+        "defect_both_miss": 41,
+        "defect_new_only": 21,
+        "defect_tiled_only": 9,
+        "normal_both_accepted": 95,
+        "normal_both_flagged": 1,
+        "normal_new_only_false_alarm": 4,
+        "normal_tiled_only_false_alarm": 1
+      }
+    },
+    "pcb4": {
+      "cohort_images": 201,
+      "defect_labelled": 100,
+      "normal_labelled": 101,
+      "high_resolution": {
+        "TP": 47,
+        "FN": 53,
+        "FP": 6,
+        "TN": 95
+      },
+      "tiled": {
+        "TP": 49,
+        "FN": 51,
+        "FP": 5,
+        "TN": 96
+      },
+      "paired": {
+        "defect_both_detect": 37,
+        "defect_both_miss": 41,
+        "defect_new_only": 10,
+        "defect_tiled_only": 12,
+        "normal_both_accepted": 92,
+        "normal_both_flagged": 2,
+        "normal_new_only_false_alarm": 4,
+        "normal_tiled_only_false_alarm": 3
+      }
+    }
+  },
+  "totals": {
+    "high_resolution": {
+      "TP": 255,
+      "FN": 145,
+      "FP": 59,
+      "TN": 343
+    },
+    "tiled": {
+      "TP": 185,
+      "FN": 215,
+      "FP": 15,
+      "TN": 387
+    },
+    "paired": {
+      "defect_both_detect": 160,
+      "defect_both_miss": 120,
+      "defect_new_only": 95,
+      "defect_tiled_only": 25,
+      "normal_both_accepted": 338,
+      "normal_both_flagged": 10,
+      "normal_new_only_false_alarm": 49,
+      "normal_tiled_only_false_alarm": 5
+    }
+  },
+  "provenance": {
+    "audit_path": "reports/eda/m3_12b_paired_failure_audit_v1.json",
+    "audit_sha256": "474e763a65d0148965ffad186ec4722cb5f3cf141376443dcf570398aaa62df2",
+    "frozen_score_source_sha256": {
+      "m3_12a": "0d33b11936c95241c503a318c447d6cad3105c5e0a93d2ec3e5068a8e9d4f35b",
+      "m3_8_tiled": "ea0354d971d52ad1ef1d3adea9eb9fdd36849f19318bf266eb4e97ac32f11f72"
+    },
+    "source_status": "DESCRIPTIVE_RETROSPECTIVE_ONLY_NOT_INDEPENDENT"
+  },
+  "limitations": [
+    "Category case lists come from previously inspected benchmark labels; use for qualitative failure analysis only, not model/threshold selection or independent validation",
+    "Previously evaluated paired scores; not a new independent experiment.",
+    "Approaches use their own previously frozen category thresholds.",
+    "Counts do not establish model superiority or manufacturing readiness.",
+    "No individual evaluation images or per-image records are published."
+  ]
+}

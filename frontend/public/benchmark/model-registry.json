@@ -1,0 +1,387 @@
+{
+  "schema_version": 1,
+  "study_type": "historical_six_configuration_comparison",
+  "independent_external_validation": false,
+  "current_inspection_id": "dino_672",
+  "cohort": {
+    "total": 802,
+    "anomaly_labelled": 400,
+    "normal_labelled": 402,
+    "categories": [
+      "pcb1",
+      "pcb2",
+      "pcb3",
+      "pcb4"
+    ]
+  },
+  "models": [
+    {
+      "id": "dino_full",
+      "name": "DINOv2 full-frame",
+      "family": "DINOv2 feature memory",
+      "phase": "Original baseline",
+      "research_question": "Can full-frame patch features provide a viable anomaly-detection baseline?",
+      "current_inspection": false,
+      "evaluation_status": "ORIGINAL_FROZEN_EVALUATION",
+      "per_category": {
+        "pcb1": {
+          "auroc": 0.8531999999999998,
+          "average_precision": 0.8260295933041882,
+          "TP": 31,
+          "FN": 69,
+          "FP": 5,
+          "TN": 95
+        },
+        "pcb2": {
+          "auroc": 0.7290000000000003,
+          "average_precision": 0.7094507248858487,
+          "TP": 24,
+          "FN": 76,
+          "FP": 6,
+          "TN": 94
+        },
+        "pcb3": {
+          "auroc": 0.7813861386138614,
+          "average_precision": 0.7509770702656187,
+          "TP": 45,
+          "FN": 55,
+          "FP": 13,
+          "TN": 88
+        },
+        "pcb4": {
+          "auroc": 0.8368316831683168,
+          "average_precision": 0.8292741587054093,
+          "TP": 14,
+          "FN": 86,
+          "FP": 0,
+          "TN": 101
+        }
+      },
+      "aggregate": {
+        "TP": 114,
+        "FN": 286,
+        "FP": 24,
+        "TN": 378,
+        "macro_auroc": 0.8001044554455445,
+        "macro_average_precision": 0.7789328867902663,
+        "defect_recall": 0.285,
+        "normal_review_rate": 0.05970149253731343
+      },
+      "source": {
+        "path": "reports/m3_official_holdout_results_v1.json",
+        "sha256": "ea0354d971d52ad1ef1d3adea9eb9fdd36849f19318bf266eb4e97ac32f11f72",
+        "experiment": "M3.8 frozen official VisA test evaluation"
+      }
+    },
+    {
+      "id": "dino_tiled",
+      "name": "DINOv2 tiled",
+      "family": "DINOv2 feature memory",
+      "phase": "Spatial tiling",
+      "research_question": "Can overlapping crops improve ranking and preserve local visual detail?",
+      "current_inspection": false,
+      "evaluation_status": "ORIGINAL_FROZEN_EVALUATION",
+      "per_category": {
+        "pcb1": {
+          "auroc": 0.9345,
+          "average_precision": 0.9386538367444641,
+          "TP": 47,
+          "FN": 53,
+          "FP": 0,
+          "TN": 100
+        },
+        "pcb2": {
+          "auroc": 0.8161000000000007,
+          "average_precision": 0.772574749347603,
+          "TP": 51,
+          "FN": 49,
+          "FP": 8,
+          "TN": 92
+        },
+        "pcb3": {
+          "auroc": 0.9187128712871288,
+          "average_precision": 0.9172108216562797,
+          "TP": 38,
+          "FN": 62,
+          "FP": 2,
+          "TN": 99
+        },
+        "pcb4": {
+          "auroc": 0.937920792079208,
+          "average_precision": 0.9288205137627608,
+          "TP": 49,
+          "FN": 51,
+          "FP": 5,
+          "TN": 96
+        }
+      },
+      "aggregate": {
+        "TP": 185,
+        "FN": 215,
+        "FP": 15,
+        "TN": 387,
+        "macro_auroc": 0.9018084158415843,
+        "macro_average_precision": 0.8893149803777769,
+        "defect_recall": 0.4625,
+        "normal_review_rate": 0.03731343283582089
+      },
+      "source": {
+        "path": "reports/m3_official_holdout_results_v1.json",
+        "sha256": "ea0354d971d52ad1ef1d3adea9eb9fdd36849f19318bf266eb4e97ac32f11f72",
+        "experiment": "M3.8 frozen official VisA test evaluation"
+      }
+    },
+    {
+      "id": "resnet_coreset",
+      "name": "ResNet coreset",
+      "family": "Multiscale CNN feature memory",
+      "phase": "Alternative backbone",
+      "research_question": "How does a compact CNN feature-memory approach compare?",
+      "current_inspection": false,
+      "evaluation_status": "RETROSPECTIVE_BENCHMARK_NOT_INDEPENDENT",
+      "per_category": {
+        "pcb1": {
+          "auroc": 0.8644,
+          "average_precision": 0.8341884005385871,
+          "TP": 44,
+          "FN": 56,
+          "FP": 9,
+          "TN": 91
+        },
+        "pcb2": {
+          "auroc": 0.6788999999999998,
+          "average_precision": 0.6858496850831882,
+          "TP": 9,
+          "FN": 91,
+          "FP": 0,
+          "TN": 100
+        },
+        "pcb3": {
+          "auroc": 0.8373267326732673,
+          "average_precision": 0.8231719315730145,
+          "TP": 55,
+          "FN": 45,
+          "FP": 8,
+          "TN": 93
+        },
+        "pcb4": {
+          "auroc": 0.9204950495049505,
+          "average_precision": 0.9178292925062203,
+          "TP": 44,
+          "FN": 56,
+          "FP": 3,
+          "TN": 98
+        }
+      },
+      "aggregate": {
+        "TP": 152,
+        "FN": 248,
+        "FP": 20,
+        "TN": 382,
+        "macro_auroc": 0.8252804455445544,
+        "macro_average_precision": 0.8152598274252525,
+        "defect_recall": 0.38,
+        "normal_review_rate": 0.04975124378109453
+      },
+      "source": {
+        "path": "reports/m3_9_resnet_retro_results_v1.json",
+        "sha256": "0b483b0a715f92b6fa8072cdf4f9a33d521b23c30a25baf31f5009bd12f34ad3",
+        "experiment": "M3.9D ResNet coreset on reused official VisA test set"
+      }
+    },
+    {
+      "id": "padim",
+      "name": "PaDiM-style",
+      "family": "Spatial statistical modelling",
+      "phase": "Statistical alternative",
+      "research_question": "Can spatial feature distributions provide useful anomaly evidence?",
+      "current_inspection": false,
+      "evaluation_status": "RETROSPECTIVE_BENCHMARK_NOT_INDEPENDENT",
+      "per_category": {
+        "pcb1": {
+          "auroc": 0.8260000000000001,
+          "average_precision": 0.7921607202686023,
+          "TP": 44,
+          "FN": 56,
+          "FP": 10,
+          "TN": 90
+        },
+        "pcb2": {
+          "auroc": 0.7546999999999999,
+          "average_precision": 0.7607738815808864,
+          "TP": 23,
+          "FN": 77,
+          "FP": 4,
+          "TN": 96
+        },
+        "pcb3": {
+          "auroc": 0.7481188118811881,
+          "average_precision": 0.7237230077213892,
+          "TP": 21,
+          "FN": 79,
+          "FP": 7,
+          "TN": 94
+        },
+        "pcb4": {
+          "auroc": 0.8925742574257426,
+          "average_precision": 0.8830505843531872,
+          "TP": 72,
+          "FN": 28,
+          "FP": 13,
+          "TN": 88
+        }
+      },
+      "aggregate": {
+        "TP": 160,
+        "FN": 240,
+        "FP": 34,
+        "TN": 368,
+        "macro_auroc": 0.8053482673267327,
+        "macro_average_precision": 0.7899270484810162,
+        "defect_recall": 0.4,
+        "normal_review_rate": 0.0845771144278607
+      },
+      "source": {
+        "path": "reports/m3_10_padim_image_retro_results_v1.json",
+        "sha256": "0dbbd7d35e9516e1b7abb6ec7e0d09afba0c04db507b0179a835fd745984a2d0",
+        "experiment": "M3.10C-1 PaDiM image-level retrospective"
+      }
+    },
+    {
+      "id": "student_teacher",
+      "name": "Student\u2013teacher",
+      "family": "Trained feature discrepancy",
+      "phase": "Learned alternative",
+      "research_question": "Can normal-only student learning produce competitive discrepancy signals?",
+      "current_inspection": false,
+      "evaluation_status": "RETROSPECTIVE_BENCHMARK_NOT_INDEPENDENT",
+      "per_category": {
+        "pcb1": {
+          "auroc": 0.7952000000000005,
+          "average_precision": 0.7323157570176831,
+          "TP": 54,
+          "FN": 46,
+          "FP": 17,
+          "TN": 83
+        },
+        "pcb2": {
+          "auroc": 0.8528000000000007,
+          "average_precision": 0.8732302090745063,
+          "TP": 37,
+          "FN": 63,
+          "FP": 1,
+          "TN": 99
+        },
+        "pcb3": {
+          "auroc": 0.7328712871287129,
+          "average_precision": 0.755701034234095,
+          "TP": 30,
+          "FN": 70,
+          "FP": 5,
+          "TN": 96
+        },
+        "pcb4": {
+          "auroc": 0.6845544554455445,
+          "average_precision": 0.6881606187421553,
+          "TP": 18,
+          "FN": 82,
+          "FP": 4,
+          "TN": 97
+        }
+      },
+      "aggregate": {
+        "TP": 139,
+        "FN": 261,
+        "FP": 27,
+        "TN": 375,
+        "macro_auroc": 0.7663564356435646,
+        "macro_average_precision": 0.7623519047671099,
+        "defect_recall": 0.3475,
+        "normal_review_rate": 0.06716417910447761
+      },
+      "source": {
+        "path": "reports/m3_11_student_image_retro_results_v1.json",
+        "sha256": "3cd62b41e309cac5f9a675e32b94db7b71764e778a3b91a3c3138a5ab6309c26",
+        "experiment": "M3.11D-1 student-teacher retrospective image benchmark"
+      }
+    },
+    {
+      "id": "dino_672",
+      "name": "DINOv2-Small \u00b7 672 px",
+      "family": "High-resolution DINOv2 feature memory",
+      "phase": "Current research inspection",
+      "research_question": "Can dense 48\u00d748 patch evidence support human-supervised inspection?",
+      "current_inspection": true,
+      "evaluation_status": "RETROSPECTIVE_BENCHMARK_NOT_INDEPENDENT",
+      "per_category": {
+        "pcb1": {
+          "auroc": 0.9021000000000001,
+          "average_precision": 0.8690226388470493,
+          "TP": 95,
+          "FN": 5,
+          "FP": 31,
+          "TN": 69
+        },
+        "pcb2": {
+          "auroc": 0.8326,
+          "average_precision": 0.783563329765581,
+          "TP": 63,
+          "FN": 37,
+          "FP": 17,
+          "TN": 83
+        },
+        "pcb3": {
+          "auroc": 0.8979207920792079,
+          "average_precision": 0.8838644675279423,
+          "TP": 50,
+          "FN": 50,
+          "FP": 5,
+          "TN": 96
+        },
+        "pcb4": {
+          "auroc": 0.9380198019801981,
+          "average_precision": 0.905582018176882,
+          "TP": 47,
+          "FN": 53,
+          "FP": 6,
+          "TN": 95
+        }
+      },
+      "aggregate": {
+        "TP": 255,
+        "FN": 145,
+        "FP": 59,
+        "TN": 343,
+        "macro_auroc": 0.8926601485148515,
+        "macro_average_precision": 0.8605081135793636,
+        "defect_recall": 0.6375,
+        "normal_review_rate": 0.14676616915422885
+      },
+      "source": {
+        "path": "models/frozen/m3_12a_dinov2s_672_v1/m312_image_pixel_retro_results_v1.json",
+        "sha256": "0d33b11936c95241c503a318c447d6cad3105c5e0a93d2ec3e5068a8e9d4f35b",
+        "experiment": "M3_12A_DINOv2S_672_8shot_v1"
+      }
+    }
+  ],
+  "methodology": {
+    "macro_auroc": "Unweighted mean of the four category image AUROCs",
+    "macro_average_precision": "Unweighted mean of the four category image AP values",
+    "defect_recall": "Total TP / total anomaly-labelled images",
+    "normal_review_rate": "Total FP / total normal-labelled images",
+    "threshold_note": "Each approach uses its own development-frozen category operating thresholds.",
+    "selection_note": "The 672-pixel DINOv2 configuration is the current human-supervised research inspection implementation. This is not a claim of statistically established superiority or independent model selection.",
+    "limitations": [
+      "Historical retrospective comparisons reuse previously evaluated images.",
+      "Later evaluations are not fresh independent external validations.",
+      "Threshold operating points are not matched to a common false-review rate.",
+      "Higher image AUROC does not guarantee higher recall at a particular threshold.",
+      "Model-specific score magnitudes are not directly comparable.",
+      "CPU cross-platform numerical score reproduction for the active model remains open."
+    ]
+  },
+  "paired_benchmark_source": {
+    "path": "frontend/public/benchmark/paired-outcomes.json",
+    "audit_sha256": "474e763a65d0148965ffad186ec4722cb5f3cf141376443dcf570398aaa62df2"
+  }
+}

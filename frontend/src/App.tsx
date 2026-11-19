@@ -1,3 +1,4 @@
+import { ResearchWorkspace } from "./ResearchWorkspace";
 import { useEffect, useRef, useState } from "react";
 import type { ChangeEvent, DragEvent } from "react";
 import type {
@@ -14,7 +15,8 @@ import {
   validateFile,
 } from "./api";
 import { LinkedInspection } from "./LinkedInspection";
-import { ResearchCaseAtlas } from "./ResearchCaseAtlas";
+
+
 
 type View = "studio" | "research" | "evidence";
 const categories: Category[] = ["pcb1", "pcb2", "pcb3", "pcb4"];
@@ -578,12 +580,7 @@ export default function App() {
 }
 
 function Research() {
-  return (
-    <>
-      <ResearchCaseAtlas />
-      <ResearchRecord />
-    </>
-  );
+  return <ResearchWorkspace record={<ResearchRecord />} />;
 }
 
 function ResearchRecord() {

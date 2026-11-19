@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "study_type": "original_inventory_and_reused_evaluation",
+  "dataset": "Amazon Science VisA",
+  "totals": {
+    "train_normal": 3614,
+    "evaluation_normal": 402,
+    "evaluation_anomaly": 400,
+    "images": 4416
+  },
+  "reference_images_per_category": 8,
+  "categories": {
+    "pcb1": {
+      "total": 1104,
+      "train_normal": 904,
+      "evaluation_normal": 100,
+      "evaluation_anomaly": 100,
+      "source_width": 1404,
+      "source_height": 1070,
+      "letterbox": {
+        "input_size": 672,
+        "patch_size": 14,
+        "grid_size": 48,
+        "resized_width": 672,
+        "resized_height": 512,
+        "left": 0,
+        "top": 80,
+        "eligible_patch_centres": 1728,
+        "excluded_patch_centres": 576
+      }
+    },
+    "pcb2": {
+      "total": 1101,
+      "train_normal": 901,
+      "evaluation_normal": 100,
+      "evaluation_anomaly": 100,
+      "source_width": 1404,
+      "source_height": 1070,
+      "letterbox": {
+        "input_size": 672,
+        "patch_size": 14,
+        "grid_size": 48,
+        "resized_width": 672,
+        "resized_height": 512,
+        "left": 0,
+        "top": 80,
+        "eligible_patch_centres": 1728,
+        "excluded_patch_centres": 576
+      }
+    },
+    "pcb3": {
+      "total": 1106,
+      "train_normal": 905,
+      "evaluation_normal": 101,
+      "evaluation_anomaly": 100,
+      "source_width": 1562,
+      "source_height": 960,
+      "letterbox": {
+        "input_size": 672,
+        "patch_size": 14,
+        "grid_size": 48,
+        "resized_width": 672,
+        "resized_height": 413,
+        "left": 0,
+        "top": 129,
+        "eligible_patch_centres": 1440,
+        "excluded_patch_centres": 864
+      }
+    },
+    "pcb4": {
+      "total": 1105,
+      "train_normal": 904,
+      "evaluation_normal": 101,
+      "evaluation_anomaly": 100,
+      "source_width": 1358,
+      "source_height": 1104,
+      "letterbox": {
+        "input_size": 672,
+        "patch_size": 14,
+        "grid_size": 48,
+        "resized_width": 672,
+        "resized_height": 546,
+        "left": 0,
+        "top": 63,
+        "eligible_patch_centres": 1872,
+        "excluded_patch_centres": 432
+      }
+    }
+  },
+  "provenance": {
+    "inventory_path": "reports/eda/visa_four_pcb_audit.json",
+    "inventory_sha256": "8835e63225bd75794c99fc1684563e2a8820054542ebc9e96219f0725d6f83eb",
+    "original_manifest_sha256": "a48557e6033318cb90556f706196bc9d247a776a23ea51aecee5a80dd0332995",
+    "paired_audit_sha256": "474e763a65d0148965ffad186ec4722cb5f3cf141376443dcf570398aaa62df2",
+    "reference_policy_path": "docs/engineering/FROZEN_M312A_ARTIFACT_REGISTRY.md"
+  },
+  "limitations": [
+    "Original inventory counts are not model predictions.",
+    "The 802 evaluation images are a subset of the 4416 images.",
+    "Historical retrospective experiments reused evaluation images.",
+    "The original audit's development-access statement applies to that audit stage, not all later research.",
+    "Letterbox diagrams illustrate the frozen input geometry, not actual image content or new inference.",
+    "Eight normal reference images per category describe the frozen 672-pixel configuration, not the entire training inventory."
+  ]
+}
