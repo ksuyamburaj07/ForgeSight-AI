@@ -39,23 +39,40 @@ interface Drag {
   moved: boolean;
 }
 
+type ViewerProps = {
+  result: InspectionResponse | null;
+  selectedPatch: Patch | null;
+  onSelectPatch: (patch: Patch | null) => void;
+};
+
 export function InspectionViewer({
   result,
-}: {
-  result: InspectionResponse | null;
-}) {
+  selectedPatch,
+  onSelectPatch,
+}: ViewerProps) {
   const identity = result
     ? `${result.inspection.source_sha256}:${result.inspection.category}:${result.inspection.processing_ms}`
     : "empty";
-  return <InspectionCanvas key={identity} result={result} />;
+  return (
+    <InspectionCanvas
+      key={identity}
+      result={result}
+      selectedPatch={selectedPatch}
+      onSelectPatch={onSelectPatch}
+    />
+  );
 }
 
 export default InspectionViewer;
 
-function InspectionCanvas({ result }: { result: InspectionResponse | null }) {
+function InspectionCanvas({
+  result,
+  selectedPatch,
+  onSelectPatch,
+}: ViewerProps) {
   const [view, setView] = useState<ViewTransform>(INITIAL_VIEW);
   const [blend, setBlend] = useState(100);
-  const [selected, setSelected] = useState<Patch | null>(null);
+  const selected = selectedPatch;
   const [dragging, setDragging] = useState(false);
   const drag = useRef<Drag | null>(null);
   const geometry = result?.inspection.geometry;
@@ -122,7 +139,7 @@ function InspectionCanvas({ result }: { result: InspectionResponse | null }) {
         },
         view,
       );
-      setSelected(sourceToPatch(point, geometry));
+      onSelectPatch(sourceToPatch(point, geometry));
     }
     drag.current = null;
     setDragging(false);
@@ -161,17 +178,21 @@ function InspectionCanvas({ result }: { result: InspectionResponse | null }) {
       setView(INITIAL_VIEW);
     } else if ((event.key === "Enter" || event.key === " ") && geometry) {
       event.preventDefault();
-      setSelected(
+      onSelectPatch(
         sourceToPatch(screenToSource({ x: 0.5, y: 0.5 }, view), geometry),
       );
     }
   }
   function selectAxis(axis: "row" | "column", value: string) {
     if (value === "") return;
-    setSelected((current) => ({
-      ...(current ?? { row: 24, column: 24 }),
-      [axis]: clamp(Math.round(Number(value)), 0, 47),
-    }));
+
+    const numeric = Number(value);
+    if (!Number.isFinite(numeric)) return;
+
+    onSelectPatch({
+      ...(selected ?? { row: 24, column: 24 }),
+      [axis]: clamp(Math.round(numeric), 0, 47),
+    });
   }
 
   return (

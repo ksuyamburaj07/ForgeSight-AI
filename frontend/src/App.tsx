@@ -13,7 +13,8 @@ import {
   syntheticInput,
   validateFile,
 } from "./api";
-import { InspectionViewer } from "./InspectionViewer";
+import { LinkedInspection } from "./LinkedInspection";
+import { ResearchCaseAtlas } from "./ResearchCaseAtlas";
 
 type View = "studio" | "research" | "evidence";
 const categories: Category[] = ["pcb1", "pcb2", "pcb3", "pcb4"];
@@ -255,12 +256,12 @@ export default function App() {
                   ? "Local CPU connected"
                   : "Service disconnected"}
             </span>
-            <span className="version-tag">M3.15</span>
+            <span className="version-tag">RESEARCH PREVIEW</span>
           </div>
         </header>
         <main id="main">
           <div className="workspace-label">
-            <span>PROJECT 05</span>
+            <span>INDUSTRIAL VISION</span>
             <span className="slash">/</span> VISUAL ANOMALY RESEARCH
           </div>
           <section className="intro">
@@ -328,7 +329,7 @@ export default function App() {
                 {v === "studio" && <span className="tiny-square" />}
               </button>
             ))}
-            <span className="workspace-note">FROZEN M3.12A / CPU RUNTIME</span>
+            <span className="workspace-note">FROZEN MODEL / LOCAL CPU</span>
           </div>
           {connectionError && (
             <div className="connection-banner" role="status">
@@ -487,8 +488,8 @@ export default function App() {
                   take a moment. Keep this page open.
                 </div>
               )}
-              <InspectionViewer
-                key={r?.source_sha256 ?? "empty"}
+              <LinkedInspection
+                key={r ? `${r.category}:${r.source_sha256}:${r.processing_ms}` : "empty"}
                 result={result}
               />
               <section
@@ -565,7 +566,7 @@ export default function App() {
           </section>
           <footer>
             <span>
-              FORGESIGHT AI <span className="slash">/</span> PROJECT 05
+              FORGESIGHT AI <span className="slash">/</span> INDUSTRIAL VISION
             </span>
             <span>Research with context. Decisions with people.</span>
             <span>LOCAL WORKSPACE</span>
@@ -577,6 +578,15 @@ export default function App() {
 }
 
 function Research() {
+  return (
+    <>
+      <ResearchCaseAtlas />
+      <ResearchRecord />
+    </>
+  );
+}
+
+function ResearchRecord() {
   return (
     <section className="research-view">
       <div className="research-lead">

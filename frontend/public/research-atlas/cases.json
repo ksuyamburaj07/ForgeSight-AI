@@ -1,0 +1,184 @@
+{
+  "version": "1.0",
+  "title": "ForgeSight Research Case Atlas",
+  "study_type": "four_reused_retrospective_diagnostic_cases",
+  "independent_benchmark": false,
+  "causal_proof": false,
+  "automatic_manufacturing_decision": false,
+  "scientific_gate": "cpu_cross_platform_score_gate_open",
+  "case_count": 4,
+  "source_notes": [
+    "docs/engineering/M314B_CPU_REPRODUCTION_NOTE.md",
+    "docs/engineering/M314C2_FOUR_PCB_VISUAL_AUDIT.md"
+  ],
+  "license": {
+    "dataset": "VisA",
+    "dataset_creator": "Amazon Science",
+    "dataset_license": "CC BY 4.0",
+    "source": "https://github.com/amazon-science/spot-diff",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "modifications": "ForgeSight research triptychs contain generated model-distance visualizations and overlays."
+  },
+  "cases": [
+    {
+      "id": "B3-01",
+      "title": "The missed signal",
+      "finding": "Anomaly not flagged; responses span PCB and background.",
+      "category": "pcb1",
+      "reference_label": "anomaly",
+      "review_flag": false,
+      "audit_observation": "Dispersed PCB and background responses",
+      "cpu": {
+        "score": 0.14532415568828583,
+        "threshold": 0.15704087913036346,
+        "valid_patches": 1728,
+        "geometry": [
+          0,
+          80,
+          672,
+          512,
+          1404,
+          1070
+        ],
+        "validation_status": "cpu_cross_platform_score_gate_open"
+      },
+      "reproduction": {
+        "frozen_score": 0.14537628,
+        "absolute_delta": 5.212431171416898e-05,
+        "original_tolerance": 5e-05,
+        "within_original_tolerance": false
+      },
+      "provenance": {
+        "source_sha256_reported": "29afa1a56639a782139b53400c84187d3ef7b4419443f0f19a0a7ea91ed3c162",
+        "model_id": "facebook/dinov2-small",
+        "model_weights_sha256": "ae1e99fcefd534ed978cdeb8326f08030c96e28b7a81ffcbc98a857c84d14be1",
+        "local_model_snapshot": "ed25f3a31f01632728cabb09d1542f84ab7b0056",
+        "record_source": "reports/visualization/m314c2/B3-01_record.json"
+      },
+      "triptych": {
+        "url": "/research-atlas/B3-01_triptych.png",
+        "sha256": "875a4b2d8e85987a82f74e0bb3e430647f3cefabae2d8d39105cc3fbaa34e4c5"
+      }
+    },
+    {
+      "id": "B3-09",
+      "title": "Below the threshold",
+      "finding": "Anomaly not flagged despite a strong right-board response.",
+      "category": "pcb2",
+      "reference_label": "anomaly",
+      "review_flag": false,
+      "audit_observation": "Strong right-board response, below image threshold",
+      "cpu": {
+        "score": 0.1427421271800995,
+        "threshold": 0.14679642021656036,
+        "valid_patches": 1728,
+        "geometry": [
+          0,
+          80,
+          672,
+          512,
+          1404,
+          1070
+        ],
+        "validation_status": "cpu_cross_platform_score_gate_open"
+      },
+      "reproduction": {
+        "frozen_score": 0.142696932,
+        "absolute_delta": 4.519518009948875e-05,
+        "original_tolerance": 5e-05,
+        "within_original_tolerance": true
+      },
+      "provenance": {
+        "source_sha256_reported": "9a825497685ae9ba789025a608d4655eac6d9e600fb5309f66f7b50347667050",
+        "model_id": "facebook/dinov2-small",
+        "model_weights_sha256": "ae1e99fcefd534ed978cdeb8326f08030c96e28b7a81ffcbc98a857c84d14be1",
+        "local_model_snapshot": "ed25f3a31f01632728cabb09d1542f84ab7b0056",
+        "record_source": "reports/visualization/m314c2/B3-09_record.json"
+      },
+      "triptych": {
+        "url": "/research-atlas/B3-09_triptych.png",
+        "sha256": "91c55240d304c79be50ab9054eaa25fb5305dde3758e18e7cc15dd12060c0813"
+      }
+    },
+    {
+      "id": "B3-17",
+      "title": "Background interference",
+      "finding": "Normal-labelled board flagged with a dominant background response.",
+      "category": "pcb3",
+      "reference_label": "normal",
+      "review_flag": true,
+      "audit_observation": "Dominant upper-left background diagonal",
+      "cpu": {
+        "score": 0.23340359330177307,
+        "threshold": 0.18991123139858246,
+        "valid_patches": 1440,
+        "geometry": [
+          0,
+          129,
+          672,
+          413,
+          1562,
+          960
+        ],
+        "validation_status": "cpu_cross_platform_score_gate_open"
+      },
+      "reproduction": {
+        "frozen_score": 0.233401522,
+        "absolute_delta": 2.0713017730711325e-06,
+        "original_tolerance": 5e-05,
+        "within_original_tolerance": true
+      },
+      "provenance": {
+        "source_sha256_reported": "c1e7f4df44c7255c52f773fca2d1db33e1c9386eceed05e32951f7d95d1a1fb6",
+        "model_id": "facebook/dinov2-small",
+        "model_weights_sha256": "ae1e99fcefd534ed978cdeb8326f08030c96e28b7a81ffcbc98a857c84d14be1",
+        "local_model_snapshot": "ed25f3a31f01632728cabb09d1542f84ab7b0056",
+        "record_source": "reports/visualization/m314c2/B3-17_record.json"
+      },
+      "triptych": {
+        "url": "/research-atlas/B3-17_triptych.png",
+        "sha256": "3108232dd2ff8342084506a7341f09010f71d7c9f87e2fea9d7db9ec3d229d54"
+      }
+    },
+    {
+      "id": "B3-23",
+      "title": "The boundary effect",
+      "finding": "Normal-labelled board flagged near its upper boundary.",
+      "category": "pcb4",
+      "reference_label": "normal",
+      "review_flag": true,
+      "audit_observation": "Dominant response near upper board boundary",
+      "cpu": {
+        "score": 0.29916033148765564,
+        "threshold": 0.23230013251304626,
+        "valid_patches": 1872,
+        "geometry": [
+          0,
+          63,
+          672,
+          546,
+          1358,
+          1104
+        ],
+        "validation_status": "cpu_cross_platform_score_gate_open"
+      },
+      "reproduction": {
+        "frozen_score": 0.2991513014,
+        "absolute_delta": 9.030087655625962e-06,
+        "original_tolerance": 5e-05,
+        "within_original_tolerance": true
+      },
+      "provenance": {
+        "source_sha256_reported": "59d0e709051379154ea125d0809cf3d40d73ea4dbea8f9e7d2c191a06461831f",
+        "model_id": "facebook/dinov2-small",
+        "model_weights_sha256": "ae1e99fcefd534ed978cdeb8326f08030c96e28b7a81ffcbc98a857c84d14be1",
+        "local_model_snapshot": "ed25f3a31f01632728cabb09d1542f84ab7b0056",
+        "record_source": "reports/visualization/m314c2/B3-23_record.json"
+      },
+      "triptych": {
+        "url": "/research-atlas/B3-23_triptych.png",
+        "sha256": "28cbaa395f3ef9e21bdfd084feee5a3da725491e8aed97b4556192f4e652a990"
+      }
+    }
+  ]
+}
