@@ -15,6 +15,7 @@ import {
   validateFile,
 } from "./api";
 import { LinkedInspection } from "./LinkedInspection";
+import { CameraStation } from "./CameraStation";
 
 
 
@@ -97,6 +98,7 @@ export default function App() {
   const [verified, setVerified] = useState(false);
   const input = useRef<HTMLInputElement>(null);
   const selection = useRef(0);
+  const inferenceInFlight = useRef(false);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -172,29 +174,67 @@ export default function App() {
     }
     void choose(e.dataTransfer.files[0]);
   }
-  async function run() {
-    if (!file || busy) return;
+  async function analyzeFrame(next: File): Promise<boolean> {
+    if (
+      !caps ||
+      !health ||
+      connectionError ||
+      inferenceInFlight.current
+    ) {
+      return false;
+    }
+
+    // A synchronous lock prevents overlapping requests even
+    // before React has rendered the busy state.
+    inferenceInFlight.current = true;
+    const requestSelection = selection.current;
+
     setBusy(true);
     setError("");
     setResult(null);
     setVerified(false);
     setElapsed(0);
+
     try {
-      const hash = await fingerprint(file);
-      const data = await inspect(file, category);
-      if (hash !== data.inspection.source_sha256)
+      await validateFile(next, caps);
+
+      const hash = await fingerprint(next);
+      const data = await inspect(next, category);
+
+      if (hash !== data.inspection.source_sha256) {
         throw new Error(
-          "Source fingerprint mismatch. The returned evidence has not been displayed.",
+          "Source fingerprint mismatch. " +
+          "The returned evidence has not been displayed."
         );
+      }
+
+      // Never replace a newer selection with stale evidence.
+      if (requestSelection !== selection.current) {
+        return false;
+      }
+
+      setFile(next);
       setResult(data);
       setVerified(true);
-    } catch (e) {
-      setError(
-        e instanceof Error ? e.message : "Inspection failed. Please retry.",
-      );
+      return true;
+    } catch (cause) {
+      if (requestSelection === selection.current) {
+        setError(
+          cause instanceof Error
+            ? cause.message
+            : "Inspection failed. Please retry."
+        );
+      }
+      return false;
     } finally {
+      inferenceInFlight.current = false;
       setBusy(false);
     }
+  }
+
+  async function run() {
+    if (!file) return;
+    await analyzeFrame(file);
   }
   async function loadSynthetic() {
     try {
@@ -378,7 +418,7 @@ export default function App() {
                           c === category ? "category selected" : "category"
                         }
                         aria-pressed={c === category}
-                        disabled={Boolean(caps && !caps.categories.includes(c))}
+                        disabled={busy || Boolean(caps && !caps.categories.includes(c))}
                         onClick={() => {
                           ++selection.current;
                           setCategory(c);
@@ -417,6 +457,15 @@ export default function App() {
                   )}
                 </button>
               </section>
+              <CameraStation
+                key={category}
+                available={connected && !validating}
+                busy={busy}
+                onSelectSnapshot={(frame) => {
+                  void choose(frame);
+                }}
+                onAnalyzeFrame={analyzeFrame}
+              />
               <div
                 className={`dropzone ${dragging ? "dragging" : ""} ${file ? "has-file" : ""}`}
                 onDragOver={(e) => {
