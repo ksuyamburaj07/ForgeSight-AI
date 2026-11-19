@@ -1,0 +1,286 @@
+.dg-gallery {
+  margin: 15px 0 25px;
+  padding: clamp(16px, 2.3vw, 27px);
+  border: 1px solid #d4dacd;
+  background: #f4f5ec;
+  color: #29342d;
+  min-width: 0;
+}
+
+.dg-gallery button:focus-visible,
+.dg-gallery a:focus-visible {
+  outline: 3px solid #dc6b3c;
+  outline-offset: 3px;
+}
+
+.dg-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 22px;
+}
+
+.dg-kicker {
+  display: block;
+  color: #b9532c;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .13em;
+  margin-bottom: 9px;
+}
+
+.dg-heading h3 {
+  margin: 0 0 9px;
+  font-size: clamp(24px, 2.7vw, 37px);
+  font-weight: 500;
+  letter-spacing: -.045em;
+}
+
+.dg-heading p {
+  margin: 0;
+  max-width: 530px;
+  color: #697568;
+  line-height: 1.7;
+  font-size: 12px;
+}
+
+.dg-count {
+  flex: 0 0 auto;
+  font-size: 10px;
+  letter-spacing: .12em;
+  color: #7a8577;
+}
+
+.dg-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(220px, .8fr);
+  gap: 17px;
+  align-items: stretch;
+}
+
+.dg-feature {
+  min-width: 0;
+  margin: 0;
+  border: 1px solid #cdd6c8;
+  background: #fdfdf7;
+}
+
+.dg-image-stage {
+  position: relative;
+  height: clamp(260px, 35vw, 450px);
+  background: #24322c;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dg-image-stage img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.dg-image-index {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  padding: 8px 11px;
+  background: #26372ee8;
+  color: #d5ec97;
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
+}
+
+.dg-image-index span {
+  color: #c0cdbd;
+  font-size: 11px;
+}
+
+.dg-image-error {
+  max-width: 250px;
+  text-align: center;
+  color: #f0b99f;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.dg-caption {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  padding: 17px;
+}
+
+.dg-caption > div {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.dg-caption span {
+  color: #798578;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+.dg-caption strong {
+  font-size: 12px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.dg-thumbnails {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 13px;
+}
+
+.dg-thumbnails-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.dg-thumbnails-heading strong {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.dg-thumbnails-heading span {
+  font-size: 9px;
+  letter-spacing: .1em;
+  color: #7a8578;
+}
+
+.dg-thumbnails-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.dg-thumb {
+  position: relative;
+  min-width: 0;
+  aspect-ratio: 1.25;
+  border: 2px solid transparent;
+  background: #26342b;
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.dg-thumb:hover {
+  border-color: #c58350;
+}
+
+.dg-thumb.is-selected {
+  border-color: #d75b2e;
+  box-shadow: 0 0 0 2px #f8f7eb inset;
+}
+
+.dg-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.dg-thumb span {
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  padding: 4px 7px;
+  color: #e0efc2;
+  background: #202e26e0;
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.dg-context {
+  margin-top: auto;
+  padding: 17px;
+  background: #e6ebdd;
+}
+
+.dg-context strong {
+  display: block;
+  font-size: 13px;
+}
+
+.dg-context p {
+  color: #677364;
+  font-size: 11px;
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+
+.dg-attribution {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  border-top: 1px solid #d8dfd2;
+  margin-top: 20px;
+  padding-top: 16px;
+}
+
+.dg-attribution p {
+  margin: 0;
+  color: #6e7b6c;
+  font-size: 10px;
+  line-height: 1.7;
+  max-width: 460px;
+}
+
+.dg-attribution > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.dg-attribution a {
+  color: #a54e29;
+  font-size: 11px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 850px) {
+  .dg-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .dg-thumbnails {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+  }
+
+  .dg-thumbnails-heading {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 580px) {
+  .dg-heading {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .dg-caption {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .dg-thumbnails {
+    display: flex;
+  }
+}

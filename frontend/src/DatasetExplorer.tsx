@@ -10,6 +10,13 @@ import type {
   PCB,
 } from "./datasetRegistry";
 
+import { DatasetGallery } from "./DatasetGallery";
+import {
+  galleryPreviewPath,
+  letterboxImageBounds,
+} from "./datasetVisual";
+import type { DatasetViewMode } from "./datasetVisual";
+
 import "./DatasetExplorer.css";
 
 const PCBS: PCB[] = ["pcb1", "pcb2", "pcb3", "pcb4"];
@@ -29,6 +36,9 @@ export function DatasetExplorer() {
   const [retry, setRetry] = useState(0);
 
   const [pcb, setPCB] = useState<PCB>("pcb1");
+  const [galleryIndex, setGalleryIndex] = useState(0);
+  const [viewMode, setViewMode] =
+    useState<DatasetViewMode>("overlay");
   const [selected, setSelected] = useState({
     row: 24,
     col: 24,
@@ -88,6 +98,8 @@ export function DatasetExplorer() {
 
   const category = registry.categories[pcb];
   const box = category.letterbox;
+  const imageBounds = letterboxImageBounds(box);
+  const imageSrc = galleryPreviewPath(pcb, galleryIndex);
   const eligible = isEligible(
     box, selected.row, selected.col,
   );
@@ -216,7 +228,10 @@ export function DatasetExplorer() {
               type="button"
               aria-pressed={id === pcb}
               className={id === pcb ? "is-selected" : ""}
-              onClick={() => setPCB(id)}
+              onClick={() => {
+                setPCB(id);
+                setGalleryIndex(0);
+              }}
             >
               <span>{id.toUpperCase()}</span>
               <strong>{c.total.toLocaleString()}</strong>
@@ -225,6 +240,12 @@ export function DatasetExplorer() {
           );
         })}
       </div>
+
+      <DatasetGallery
+        pcb={pcb}
+        selectedIndex={galleryIndex}
+        onSelectIndex={setGalleryIndex}
+      />
 
       <div className="ds-distribution">
         <div className="ds-distribution-heading">
@@ -292,6 +313,27 @@ export function DatasetExplorer() {
             <span>48×48 grid</span>
           </div>
 
+          <div
+            className="ds-view-modes"
+            role="group"
+            aria-label="Source image and patch geometry display"
+          >
+            {([
+              ["source", "Source photograph"],
+              ["overlay", "Patch overlay"],
+              ["mask", "Eligibility mask"],
+            ] as const).map(([id, label]) => (
+              <button
+                key={id}
+                type="button"
+                aria-pressed={viewMode === id}
+                onClick={() => setViewMode(id)}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+
           <svg
             viewBox="0 0 480 480"
             role="group"
@@ -303,14 +345,40 @@ export function DatasetExplorer() {
             onClick={pick}
             onKeyDown={keydown}
           >
-            {points.map((point) => (
+            {viewMode !== "mask" && (
+              <image
+                href={imageSrc}
+                x={imageBounds.x}
+                y={imageBounds.y}
+                width={imageBounds.width}
+                height={imageBounds.height}
+                preserveAspectRatio="none"
+                pointerEvents="none"
+              />
+            )}
+
+            {viewMode !== "source" && points.map((point) => (
               <rect
                 key={`${point.row}-${point.col}`}
                 x={point.col * 10}
                 y={point.row * 10}
                 width="9.5"
                 height="9.5"
-                fill={point.valid ? "#79A58B" : "#5C6560"}
+                fill={
+                  viewMode === "mask"
+                    ? point.valid
+                      ? "#79A58B"
+                      : "#5C6560"
+                    : point.valid
+                      ? "rgba(118, 197, 139, 0.13)"
+                      : "#5C6560"
+                }
+                stroke={
+                  viewMode === "overlay"
+                    ? "rgba(248, 252, 243, 0.33)"
+                    : "#304036"
+                }
+                strokeWidth={0.4}
               />
             ))}
 
@@ -325,6 +393,13 @@ export function DatasetExplorer() {
               pointerEvents="none"
             />
           </svg>
+
+          <p className="ds-illustration-note">
+            Showing normal-training example {galleryIndex + 1}
+            of 4, geometrically fitted into the 672×672
+            input frame. This is an instructional illustration,
+            not an encoder output or anomaly heatmap.
+          </p>
 
           <div className="ds-map-legend">
             <span><i className="ds-valid" /> Eligible patch centre</span>

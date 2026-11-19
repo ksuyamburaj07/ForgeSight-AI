@@ -444,3 +444,52 @@
     width: 100%;
   }
 }
+
+/* M3.19B — source-aligned visual preprocessing */
+
+.ds-view-modes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 5px;
+  margin-top: 14px;
+}
+
+.ds-view-modes button {
+  border: 1px solid #c5d0c3;
+  background: #ecf1e8;
+  color: #314035;
+  padding: 11px 7px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+  line-height: 1.4;
+  min-width: 0;
+}
+
+.ds-view-modes button:hover {
+  background: #e0eadb;
+}
+
+.ds-view-modes button[aria-pressed="true"] {
+  background: #293a30;
+  color: #f1f6ec;
+  border-color: #293a30;
+}
+
+.ds-view-modes button:focus-visible {
+  outline: 3px solid #df6839;
+  outline-offset: 2px;
+}
+
+.ds-illustration-note {
+  margin: 6px 0 14px;
+  font-size: 10px;
+  line-height: 1.7;
+  color: #657366;
+}
+
+@media (max-width: 460px) {
+  .ds-view-modes {
+    grid-template-columns: 1fr;
+  }
+}

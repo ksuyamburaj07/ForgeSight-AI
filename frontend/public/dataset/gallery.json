@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "dataset": "Amazon Science VisA",
+  "source_partition": "normal_training",
+  "inventory_audit_sha256": "8835e63225bd75794c99fc1684563e2a8820054542ebc9e96219f0725d6f83eb",
+  "license": "CC BY 4.0",
+  "official_source": "https://github.com/amazon-science/spot-diff",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "transformation": "Aspect-ratio-preserving resize to at most 1000 pixels; JPEG recompression; EXIF/source metadata removed.",
+  "gallery_reference_bank_membership_verified": false,
+  "items": {
+    "pcb1": [
+      {
+        "id": "pcb1_01",
+        "src": "/dataset/gallery/pcb1_01.jpg",
+        "source_path": "pcb1/Data/Images/Normal/0722.JPG",
+        "source_sha256": "bad0752f2c9a140598182be5149e31a99677f10bf34c9e1be4406341be48444c",
+        "derived_sha256": "42b541d96218be1ed603da345f00be9f285d25e0a68c000af3570b429e7549e6",
+        "original_width": 1404,
+        "original_height": 1070,
+        "preview_width": 1000,
+        "preview_height": 762
+      },
+      {
+        "id": "pcb1_02",
+        "src": "/dataset/gallery/pcb1_02.jpg",
+        "source_path": "pcb1/Data/Images/Normal/0123.JPG",
+        "source_sha256": "519341751feace15782a24d7d126ab3ea66c1919872d3cbce7eef25da183912c",
+        "derived_sha256": "dd1fbda5d2794719ceb32007625abdc7330813b1e39ccc7526e129ac53155acc",
+        "original_width": 1404,
+        "original_height": 1070,
+        "preview_width": 1000,
+        "preview_height": 762
+      },
+      {
+        "id": "pcb1_03",
+        "src": "/dataset/gallery/pcb1_03.jpg",
+        "source_path": "pcb1/Data/Images/Normal/0031.JPG",
+        "source_sha256": "d90f5a1b8113c301d626b9c26b450df5a67f46cf278d680f73a2e41ab05831a8",
+        "derived_sha256": "5df7547ad55cb2eb6023f45c7c0c4852e80bd32811a3f8dc569930f68cc5da9d",
+        "original_width": 1404,
+        "original_height": 1070,
+        "preview_width": 1000,
+        "preview_height": 762
+      },
+      {
+        "id": "pcb1_04",
+        "src": "/dataset/gallery/pcb1_04.jpg",
+        "source_path": "pcb1/Data/Images/Normal/0842.JPG",
+        "source_sha256": "61563f817b2942f252f62ef634ef661f467a368ebc4f2341dbaef15b51305eee",
+        "derived_sha256": "3dd21b6b87a5a7f07cfa0424cae1a7e60713cd3fd7c217d34de31b6698dafa1e",
+        "original_width": 1404,
+        "original_height": 1070,
+        "preview_width": 1000,
+        "preview_height": 762
+      }
+    ],
+    "pcb2": [
+      {
+        "id": "pcb2_01",
+        "src": "/dataset/gallery/pcb2_01.jpg",
+        "source_path": "pcb2/Data/Images/Normal/0308.JPG",
+        "source_sha256": "ccd13a511a38353b9aab2357591cffaeebb7cee5e8be597d4d378925f1872d45",
+        "derived_sha256": "88b74ee68e82e4a00221ce94d808fe0a55b30e85cde9308170b3970e8af84212",
+        "original_width": 1404,
+        "original_height": 1070,
+        "preview_width": 1000,
+        "preview_height": 762
+      },
+      {
+        "id": "pcb2_02",
+        "src": "/dataset/gallery/pcb2_02.jpg",
+        "source_path": "pcb2/Data/Images/Normal/0272.JPG",
+        "source_sha256": "e864f9a5fbfebe10d65cf2f1555977b9c8bba16c4a067ca8904328f3dc5ccd5f",
+        "derived_sha256": "bd7a8e25e3671483782ac6f9f41833e3e0010559b91c83b2527e887bbe52c176",
+        "original_width": 1404,
+        "original_height": 1070,
+        "preview_width": 1000,
+        "preview_height": 762
+      },
+      {
+        "id": "pcb2_03",
+        "src": "/dataset/gallery/pcb2_03.jpg",
+        "source_path": "pcb2/Data/Images/Normal/0249.JPG",
+        "source_sha256": "02951562e627ea89bd818620a3b9db43d9a7f167b845aea989887383e5c30550",
+        "derived_sha256": "bfcc79874661a9e57dc8f32278ad1d572bef51f68cb5ec72637145ad40d05534",
+        "original_width": 1404,
+        "original_height": 1070,
+        "preview_width": 1000,
+        "preview_height": 762
+      },
+      {
+        "id": "pcb2_04",
+        "src": "/dataset/gallery/pcb2_04.jpg",
+        "source_path": "pcb2/Data/Images/Normal/0151.JPG",
+        "source_sha256": "472925aec955badbc0bfffe2058688ff3107e3020f154b1c0d847d360d26ee13",
+        "derived_sha256": "c6ab02bad2426801d82bab0200415b60f6c035f0ded1e86c4514d0b547213302",
+        "original_width": 1404,
+        "original_height": 1070,
+        "preview_width": 1000,
+        "preview_height": 762
+      }
+    ],
+    "pcb3": [
+      {
+        "id": "pcb3_01",
+        "src": "/dataset/gallery/pcb3_01.jpg",
+        "source_path": "pcb3/Data/Images/Normal/0837.JPG",
+        "source_sha256": "7f67f942964afce19a8c4e244c701e93bac0c05b9a520d70e4159f985dc6c255",
+        "derived_sha256": "62cb7a0d5039c28c5dd9e19080c003bbee0bddc23eb3c6186abff07f0a69b81d",
+        "original_width": 1562,
+        "original_height": 960,
+        "preview_width": 1000,
+        "preview_height": 615
+      },
+      {
+        "id": "pcb3_02",
+        "src": "/dataset/gallery/pcb3_02.jpg",
+        "source_path": "pcb3/Data/Images/Normal/0113.JPG",
+        "source_sha256": "6e30acd70bbffbba4db41bbb8c67cb4d308943c84f3e31e3f90994e90f929155",
+        "derived_sha256": "d1087d94b86ff29b814bedb485e83cdf5fb2e5361b0a4d67acac55ecbeedce8a",
+        "original_width": 1562,
+        "original_height": 960,
+        "preview_width": 1000,
+        "preview_height": 615
+      },
+      {
+        "id": "pcb3_03",
+        "src": "/dataset/gallery/pcb3_03.jpg",
+        "source_path": "pcb3/Data/Images/Normal/0767.JPG",
+        "source_sha256": "99a68a009ce508c920566c2fe0ae016ca2390c0731e1df507759520bfba4e68f",
+        "derived_sha256": "59f909477f4dbf1ed27bd8cfd19cb3fbc11a9383237572f1a65b1d015c0eae2c",
+        "original_width": 1562,
+        "original_height": 960,
+        "preview_width": 1000,
+        "preview_height": 615
+      },
+      {
+        "id": "pcb3_04",
+        "src": "/dataset/gallery/pcb3_04.jpg",
+        "source_path": "pcb3/Data/Images/Normal/0841.JPG",
+        "source_sha256": "0f176bc857884ac198373efaa80bb86091f8e66cf969b8bea5d04e1ad454b509",
+        "derived_sha256": "505e8d74253565ae9b92ac17b2dff0e3e226e437b9fc6648c1b8dd160bd7934d",
+        "original_width": 1562,
+        "original_height": 960,
+        "preview_width": 1000,
+        "preview_height": 615
+      }
+    ],
+    "pcb4": [
+      {
+        "id": "pcb4_01",
+        "src": "/dataset/gallery/pcb4_01.jpg",
+        "source_path": "pcb4/Data/Images/Normal/0609.JPG",
+        "source_sha256": "d6adedb61c09f02f65f7382eb774d65d76863feb4de05782906690c18f04b45b",
+        "derived_sha256": "d5bbc456e9923efc3b74c081ed8f0445c3625d9c609eca00519c81632a8a6f01",
+        "original_width": 1358,
+        "original_height": 1104,
+        "preview_width": 1000,
+        "preview_height": 813
+      },
+      {
+        "id": "pcb4_02",
+        "src": "/dataset/gallery/pcb4_02.jpg",
+        "source_path": "pcb4/Data/Images/Normal/0096.JPG",
+        "source_sha256": "cc399935237769866f434389d30d04b548f3e826c88844fff8c9f92e9a936458",
+        "derived_sha256": "c546b7b1443f3baa2dee8b3bddff87c798cb26f6351adccaa75b12628ac73c3c",
+        "original_width": 1358,
+        "original_height": 1104,
+        "preview_width": 1000,
+        "preview_height": 813
+      },
+      {
+        "id": "pcb4_03",
+        "src": "/dataset/gallery/pcb4_03.jpg",
+        "source_path": "pcb4/Data/Images/Normal/0665.JPG",
+        "source_sha256": "58ad139ad65fa3e99fe41a6fd4193b90cb81138343cd03b1798a13af36967694",
+        "derived_sha256": "c85f47bfd53522ef19a3eb91676886e0731ec33f07d1b01d8a121e889648e954",
+        "original_width": 1358,
+        "original_height": 1104,
+        "preview_width": 1000,
+        "preview_height": 813
+      },
+      {
+        "id": "pcb4_04",
+        "src": "/dataset/gallery/pcb4_04.jpg",
+        "source_path": "pcb4/Data/Images/Normal/0471.JPG",
+        "source_sha256": "1f8499199549bbeaf3a10811dc4b05c618015454c1925473a528c32f8a09087b",
+        "derived_sha256": "ac53de053954188acad2601c5a49cb47ebd121dbed0fbaff00f5dfd825263bd7",
+        "original_width": 1358,
+        "original_height": 1104,
+        "preview_width": 1000,
+        "preview_height": 813
+      }
+    ]
+  }
+}
