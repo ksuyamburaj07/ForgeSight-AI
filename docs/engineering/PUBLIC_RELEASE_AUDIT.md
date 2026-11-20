@@ -27,12 +27,17 @@ Primary records checked on the audit date: [VisA registry](https://registry.open
 
 ## GitHub surfaces
 
-Before the visibility change:
+At the initial baseline audit, before the release-preparation PR:
 
 - Three merged pull requests; no issue comments, inline PR comments, submitted PR reviews, or commit comments. PR bodies and commit metadata were pattern-scanned; no credential matches or attachment URLs found.
 - All eight available completed workflow-run logs were downloaded and pattern-scanned; no credential matches found.
 - No existing GitHub releases/assets or Actions artifacts.
 - Wiki and Discussions were disabled.
+
+The subsequent release-preparation diff was reviewed separately: only
+documentation and package metadata changed, no binary assets were added,
+and its new text had no credential-pattern matches. Its pull request and
+CI results remain available in GitHub's public history after publication.
 
 ## Software verification and boundaries
 
