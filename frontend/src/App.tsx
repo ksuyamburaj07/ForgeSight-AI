@@ -96,6 +96,7 @@ export default function App() {
   const [dragging, setDragging] = useState(false);
   const [elapsed, setElapsed] = useState(0);
   const [verified, setVerified] = useState(false);
+  const [compactStudio, setCompactStudio] = useState(false);
   const input = useRef<HTMLInputElement>(null);
   const selection = useRef(0);
   const inferenceInFlight = useRef(false);
@@ -216,6 +217,7 @@ export default function App() {
       setFile(next);
       setResult(data);
       setVerified(true);
+      setCompactStudio(true);
       return true;
     } catch (cause) {
       if (requestSelection === selection.current) {
@@ -254,9 +256,15 @@ export default function App() {
         Skip to workspace
       </a>
       <aside className="rail" aria-label="Workspace navigation">
-        <a className="brand-symbol" href="#main" aria-label="ForgeSight home">
+        <button
+          type="button"
+          className="brand-symbol"
+          onClick={() => setView("studio")}
+          aria-label="Open Inspection Studio"
+          title="Inspection Studio"
+        >
           <Icon name="scan" size={28} />
-        </a>
+        </button>
         <div className="rail-links">
           {(
             [
@@ -278,8 +286,12 @@ export default function App() {
           ))}
         </div>
         <span className="rail-caption">LOCAL / CPU</span>
-        <span className="rail-marker">
-          F<span>05</span>
+        <span
+          className="rail-marker"
+          aria-label="ForgeSight AI"
+          title="ForgeSight AI"
+        >
+          F<span>S</span>
         </span>
       </aside>
       <div className="page">
@@ -305,8 +317,33 @@ export default function App() {
           <div className="workspace-label">
             <span>INDUSTRIAL VISION</span>
             <span className="slash">/</span> VISUAL ANOMALY RESEARCH
+            {view === "studio" && (compactStudio || result) && (
+              <div className="studio-intro-actions">
+                {result && (
+                  <a href="#inspection-evidence">
+                    Jump to evidence
+                  </a>
+                )}
+                <button
+                  type="button"
+                  onClick={() =>
+                    setCompactStudio((previous) => !previous)
+                  }
+                >
+                  {compactStudio
+                    ? "Show introduction"
+                    : "Focus on inspection"}
+                </button>
+              </div>
+            )}
           </div>
-          <section className="intro">
+          <section
+            className={
+              view === "studio" && compactStudio
+                ? "intro intro-compact"
+                : "intro"
+            }
+          >
             <div>
               <div className="eyebrow">
                 <span className="orange-tick" /> EVIDENCE BEFORE DECISIONS
@@ -539,6 +576,11 @@ export default function App() {
                   take a moment. Keep this page open.
                 </div>
               )}
+              <span
+                id="inspection-evidence"
+                className="inspection-evidence-anchor"
+                aria-hidden="true"
+              />
               <LinkedInspection
                 key={r ? `${r.category}:${r.source_sha256}:${r.processing_ms}` : "empty"}
                 result={result}

@@ -298,7 +298,7 @@ export function DatasetExplorer() {
           <span className="ds-overline">
             Interactive geometry / Frozen inspection input
           </span>
-          <h3>What the model actually measures.</h3>
+          <h3>Which patch centres count.</h3>
         </div>
         <p>
           Explore patch-centre eligibility for the selected
