@@ -9,15 +9,31 @@ async function request(path: string, init: RequestInit = {}): Promise<unknown> {
     if (error instanceof DOMException && error.name === "AbortError")
       throw error;
     throw new Error(
-      "Cannot reach the local inspection service. Start FastAPI on 127.0.0.1:8000, then reconnect.",
+      "Cannot reach the inspection service. Check your connection or try again shortly.",
     );
   }
   let payload: unknown;
   try {
     payload = await response.json();
   } catch {
+    // Public reverse proxies may emit HTML error pages.
+    if (response.status === 413) {
+      throw new Error(
+        "The upload was rejected as too large (HTTP 413). Choose a smaller image.",
+      );
+    }
+    if (response.status === 429) {
+      throw new Error(
+        "Inspection requests are temporarily rate-limited (HTTP 429). Try again shortly.",
+      );
+    }
+    if ([502, 503, 504].includes(response.status)) {
+      throw new Error(
+        "The inspection service is temporarily unavailable. Try again shortly.",
+      );
+    }
     throw new Error(
-      `Service returned an unreadable response (HTTP ${response.status}). Check the local API.`,
+      `Service returned an unreadable response (HTTP ${response.status}). Try again shortly.`,
     );
   }
   if (!response.ok) {

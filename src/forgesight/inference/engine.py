@@ -93,6 +93,11 @@ class FrozenInspectionEngine:
             )
         return self._banks[category]
 
+    def verify_all_banks(self) -> None:
+        """Verify and cache every frozen category reference bank."""
+        for category in sorted(BANK_ROWS):
+            self._bank(category)
+
     def inspect_path(
         self,
         path: str | Path,

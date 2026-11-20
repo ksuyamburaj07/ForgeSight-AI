@@ -1,0 +1,35 @@
+[Unit]
+Description=ForgeSight AI CPU research inspection service
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=forgesight
+Group=forgesight
+WorkingDirectory=/srv/forgesight/app
+
+# Path.home() in the frozen encoder resolves this cache.
+Environment=HOME=/var/lib/forgesight
+Environment=PYTHONDONTWRITEBYTECODE=1
+Environment=HF_HUB_OFFLINE=1
+Environment=TRANSFORMERS_OFFLINE=1
+
+# Initial two-vCPU settings; measure on target host.
+Environment=OMP_NUM_THREADS=2
+Environment=MKL_NUM_THREADS=2
+
+ExecStart=/srv/forgesight/app/.venv/bin/uvicorn forgesight.api.app:app --host 127.0.0.1 --port 8000 --workers 1
+
+Restart=on-failure
+RestartSec=5
+
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/forgesight
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target
