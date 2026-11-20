@@ -6,11 +6,11 @@
 
 ForgeSight AI investigates industrial visual inspection using reproducible computer vision experiments, frozen deep-learning representations, nearest-neighbor anomaly scoring, controlled evaluation, and human-supervised inspection principles.
 
-The current project has completed multiple research milestones and is transitioning into a deployable inspection application.
+The project now includes a working local CPU inference service, camera-enabled React inspection studio, interactive research explorers, and preserved retrospective evidence. Public deployment remains a separate, unverified release milestone.
 
 > **Current status — November 2026**
 >
-> The research foundation and experimental DINOv2 inference workflow exist. The local command-line package currently performs real input validation, not model inference. A unified four-PCB inference service and public web application are under development.
+> Real four-category CPU inference, the FastAPI service, and the React Inspection Studio are implemented and tested locally. The public application and its runtime artifact delivery have not yet been deployed or independently verified.
 >
 > This is not a certified manufacturing inspection system.
 
@@ -22,14 +22,14 @@ The current project has completed multiple research milestones and is transition
 |---|---|
 | Image validation and metadata extraction | Implemented |
 | Four-category VisA PCB research | Completed research stages |
-| DINOv2-Small frozen research scorer | Implemented in Colab research |
+| DINOv2-Small frozen research scorer | Implemented in research and local CPU inference; cross-platform numerical gate open |
 | Category-specific frozen reference banks | Recovered and SHA-256 verified |
 | Retrospective image-level evaluation | Completed |
 | Spatial failure and boundary diagnostics | Completed |
-| Source-code regression tests | 194 passing at M3.14 baseline |
-| Unified local inference engine | Planned |
-| Human-supervised inspection API | Planned |
-| Interactive industrial dashboard | Planned |
+| Automated regression tests | 227 Python and 67 frontend tests passed on November 20, 2026 |
+| Unified local inference engine | Implemented for all four PCB categories |
+| Human-supervised inspection API | Implemented locally with FastAPI |
+| Interactive industrial dashboard | Implemented in React, including camera/video inputs and research explorers |
 | Public deployment | Not yet available |
 
 ## 1. Research motivation
@@ -49,6 +49,91 @@ ForgeSight emphasizes:
 - Human review for consequential inspection decisions
 
 Our goal is a credible, open engineering system, not an unsupported claim of factory-grade accuracy.
+
+### Research journey — why the direction changed
+
+ForgeSight AI began with an engineering question: could we
+build a credible, end-to-end industrial computer-vision
+inspection system using genuinely accessible research data?
+
+The intention was to learn how visual inspection works beyond
+a model notebook: dataset auditing, representations, calibration,
+false alarms, missed anomalies, artifact integrity, inference,
+human review, software tests, and a real application.
+
+We used Amazon Science VisA's four PCB categories and
+investigated **six evaluated configurations** across multiple
+method families. These are historical experiments, not six
+independent external validation studies.
+
+| Configuration | Macro image AUROC | Anomalies flagged / 400 | Normal images flagged / 402 |
+|---|---:|---:|---:|
+| DINOv2 full-frame | 0.8001 | 114 | 24 |
+| DINOv2 tiled | **0.9018** | 185 | 15 |
+| ResNet coreset / PatchCore-style | 0.8253 | 152 | 20 |
+| PaDiM-style statistical model | 0.8053 | 160 | 34 |
+| Student–teacher / STFPM-lite | 0.7664 | 139 | 27 |
+| High-resolution DINOv2-Small, 672 px | 0.8927 | **255** | 59 |
+
+The early tiled DINOv2 configuration retained the highest
+reported macro image AUROC. The later high-resolution
+configuration flagged 70 more anomaly-labelled images at its
+own frozen category thresholds, but also flagged 44 additional
+normal-labelled images.
+
+**That is a tradeoff, not a universal victory.** AUROC measures
+image ranking across thresholds, whereas the counts above
+describe distinct, previously frozen operating thresholds.
+The models were not compared at a common false-review rate.
+
+Our experiments repeatedly exposed missed anomalies and normal
+images flagged for review. The follow-up spatial investigations
+examined four selected cases, including background-associated
+evidence and PCB boundary sensitivity. They produced useful
+descriptive diagnostics, not a causal explanation of every
+failure or an independent validation of a proposed remedy.
+
+The engineering direction therefore changed. Rather than
+present a model as an autonomous pass/fail authority, ForgeSight
+became an **evidence-first, human-supervised research inspection
+studio**. Its interface exposes source-aligned views, raw patch
+distances, selected measurements, spatial visualizations,
+provenance, and explicit unresolved limitations.
+
+The active 672-pixel DINOv2-Small configuration is the
+implemented inspection workflow, **not a claim that it is
+statistically or operationally superior to every alternative**.
+
+Scientific boundaries:
+
+- The 802-image cohort contains 400 anomaly-labelled and
+  402 normal-labelled VisA images and was reused in later
+  retrospective experiments.
+- The original four-PCB inventory contains 4,416 images:
+  3,614 normal-training, 402 evaluation-normal, and
+  400 evaluation-anomaly.
+- The active score is the mean of the top 1% of eligible
+  48×48 patch-grid cosine nearest-neighbour distances.
+- The CPU cross-platform numerical score gate remains open:
+  three of four audited cases met the stated tolerance;
+  one narrowly did not. All four review flags were unchanged.
+- Heatmaps are interpolated model evidence, not pixel-level
+  defect segmentation. The 3D surface depicts relative
+  distances, not physical PCB height.
+- Camera and video frames may differ markedly from the
+  VisA benchmark domain. Strong scores do not confirm
+  physical defects.
+- The system does not authorize autonomous manufacturing
+  acceptance or rejection.
+
+The public research aggregates are available in
+[`model-registry.json`](frontend/public/benchmark/model-registry.json)
+and
+[`paired-outcomes.json`](frontend/public/benchmark/paired-outcomes.json).
+Their source references preserve the identities of earlier
+research records; publication of aggregates alone does not
+redistribute or independently reproduce every original
+research input.
 
 ## 2. Dataset and research scope
 
@@ -106,7 +191,7 @@ Each PCB category has its own reference bank constructed from eight normal refer
 
 The research visualization pipeline can project patch distances back onto the original image. Visualization smoothing is not part of the frozen raw image-scoring operation.
 
-The future application must reproduce this contract before exposing model-generated results to users.
+The local service implements this inspection contract. The separate CPU cross-platform numerical score reproduction gate remains open, so this must not be represented as fully closed reproducibility.
 
 ## 4. Frozen research results
 
@@ -152,27 +237,53 @@ The investigation identified background-associated high-scoring patches in some 
 
 No foreground-only scoring modification has been approved for deployment.
 
-## 5. Existing software
+## 5. Software and inspection experiences
 
-ForgeSight already contains a Python package with independently tested modules covering image processing, experimental representations, geometric analysis, data protocols, evaluation, and several anomaly-detection research methods.
+ForgeSight provides two distinct Python entry points.
 
-The currently exposed CLI provides an image-validation workflow.
+### Validation-only CLI
 
-It can:
+The original `forgesight inspect` CLI validates input
+images, checks metadata and returns structured results.
 
-- Decode supported JPEG, PNG and WebP inputs
-- Validate size and image dimensions
-- Handle EXIF orientation
-- Report source format, dimensions and SHA-256
-- Return structured JSON and explicit input errors
+Its `inference_performed: false` field is intentional.
+This CLI must not be confused with the neural-network
+inspection service.
 
-**It does not yet execute the frozen DINOv2 detector.**
+### Genuine CPU inference service
 
-Its existing results correctly indicate:
+The FastAPI application in
+[`src/forgesight/api/app.py`](src/forgesight/api/app.py)
+implements genuine local PCB anomaly inspection.
 
-`inference_performed: false`
+The `/api/v1/inspect` endpoint supports the four VisA PCB
+categories and uses the verified DINOv2-Small encoder,
+frozen category-specific reference banks, 672-pixel
+preprocessing and cosine nearest-neighbour scoring.
 
-This behavior must remain explicit until real model inference is implemented and tested.
+The service returns image-level anomaly evidence, raw
+patch measurements, original-image visualizations,
+source SHA-256 and provenance.
+
+A flagged score requests human review. It does not
+establish a confirmed physical defect.
+
+### React Inspection Studio
+
+The application in [`frontend/`](frontend/) includes:
+
+- Upload inspection for PCB1 through PCB4
+- Browser camera capture and photograph review
+- Guided video and paced, serial frame sampling
+- Linked original, distance-map and overlay views
+- Interactive 2D/3D patch-distance visualizations
+- Six-configuration retrospective Model Explorer
+- Audited Dataset Explorer with 16 source photographs
+- Four-case historical Case Atlas
+- Engineering records and unresolved scientific gates
+
+The application has been exercised locally with genuine
+CPU inference. Public deployment has not yet been verified.
 
 ## 6. Local development
 
@@ -204,7 +315,31 @@ python -m forgesight inspect /absolute/path/to/image.png
 
 This command does not perform neural-network inference.
 
-Research notebooks and frozen model assets have additional runtime and dependency requirements. They are not installed by the minimal package configuration above.
+The minimal installation above supports the
+validation-oriented CLI and core tests. It does not
+provision the frozen neural-network runtime.
+
+For genuine CPU inference, a separate optional dependency
+group is declared:
+
+```bash
+python -m pip install -e '.[dev,service,inference]'
+```
+
+For CPU-only deployments, install a compatible PyTorch CPU
+wheel using the official platform-specific guidance before
+installing the other package dependencies. A clean-install
+test remains pending.
+
+**Installing dependencies is not sufficient to run inference.**
+The service additionally requires the exact frozen DINOv2
+snapshot and the four original SHA-256-verified reference
+banks, which are intentionally excluded from this repository.
+
+See the
+[CPU runtime and artifact guide](docs/engineering/RELEASE_CPU_RUNTIME.md)
+before running or deploying the service.
+
 
 ## 7. Repository organization
 
@@ -224,31 +359,36 @@ Large or unreviewed research artifacts are intentionally excluded from the curre
 
 See the [Repository Guide](docs/REPOSITORY_GUIDE.md) for the complete organization plan.
 
-## 8. Engineering roadmap
+## 8. Engineering status and release gates
 
-### Completed foundation
+### Implemented and locally verified
 
-- [x] Implement deterministic input-validation boundaries
-- [x] Develop PCB research dataset protocols
-- [x] Explore multiple visual anomaly-detection approaches
-- [x] Freeze and evaluate the M3.12A DINOv2 research configuration
-- [x] Complete M3.13 spatial and boundary diagnostics
-- [x] Verify the six essential frozen M3.12A artifacts
-- [x] Establish a local, version-controlled source baseline
+- [x] Audited the four VisA PCB categories
+- [x] Evaluated six historical model configurations
+- [x] Frozen the high-resolution DINOv2 research method
+- [x] Investigated selected false alarms and missed anomalies
+- [x] Built the four-category CPU inference service
+- [x] Built camera and paced-video inspection
+- [x] Added linked 2D/3D evidence visualization
+- [x] Added model, dataset and historical-case explorers
+- [x] Passed 67 frontend tests at the M3.20A checkpoint
+- [x] Passed 227 Python tests at the November 20 release-prep checkpoint
 
-### Application development
+### Open scientific and publication requirements
 
-- [ ] Implement one reproducible inference interface for PCB1–PCB4
-- [ ] Verify inference scores against the frozen reference pipeline
-- [ ] Benchmark CPU and GPU runtime behavior
-- [ ] Build a human-supervised inspection service
-- [ ] Implement traceable inspection and model-version records
-- [ ] Integrate original-image, novelty-map and overlay views
-- [ ] Build the industrial web dashboard
-- [ ] Audit deployment licensing and packaging
-- [ ] Publish and validate a functioning public application
+- [ ] Resolve or retain the remaining numerical reproduction
+      discrepancy with explicit disclosure
+- [ ] Verify all Python inference dependencies in a clean environment
+- [ ] Document frozen model and reference-bank provisioning
+- [ ] Complete repository history, licensing and security audits
+- [ ] Deploy the real FastAPI CPU inference service
+- [ ] Verify the public HTTPS application end to end
+- [ ] Complete responsive, keyboard and camera acceptance testing
 
-The roadmap describes planned work, not already implemented capabilities.
+The reused 802-image retrospective evaluation does not
+constitute independent external validation. This is a
+human-supervised research system, not a certified autonomous
+manufacturing inspection product.
 
 ## 9. Responsible interpretation
 
@@ -264,7 +404,7 @@ The source baseline is preserved in Git:
 
 - Baseline commit: `4c78c67`
 - Baseline tag: `m3.14a-pre-app-baseline-v1`
-- Baseline verification: 194 passing existing tests
+- Earlier M3.14 baseline: 194 Python tests; current Python release suite pending rerun. Frontend: 67 passing tests at M3.20A.
 - Frozen M3.12A artifacts: six SHA-256 verification checks passed
 
 The tag preserves committed source code, not ignored datasets, notebooks, pretrained weights, reference banks or output reports.

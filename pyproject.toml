@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "forgesight-ai"
 version = "0.0.1"
-description = "Open industrial vision inspection: verified inputs first, inference later"
+description = "Research PCB anomaly inspection with verified CPU inference and human review"
 readme = "README.md"
 requires-python = ">=3.11"
 license = {file = "LICENSE"}
@@ -23,6 +23,18 @@ service = [
     "uvicorn>=0.34,<1",
     "python-multipart>=0.0.20,<1",
     "pydantic>=2.10,<3",
+]
+
+# Observed working Linux CPU environment, 2026-11-20.
+# Clean-environment installation remains a release gate.
+inference = [
+    "numpy==2.5.4",
+    "torch==2.15.0",
+    "torchvision==0.29.2",
+    "transformers==4.57.6",
+    "safetensors==0.8.0",
+    "huggingface-hub==0.36.2",
+    "tokenizers==0.22.2",
 ]
 
 [project.scripts]
