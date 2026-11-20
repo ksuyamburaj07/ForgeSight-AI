@@ -1,5 +1,8 @@
 # VisA Dataset Gallery — Attribution
 
+Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+Upstream notice: https://github.com/amazon-science/spot-diff/blob/main/NOTICE
+
 The 16 photographs in this directory originate from the
 Amazon Science Visual Anomaly (VisA) dataset.
 

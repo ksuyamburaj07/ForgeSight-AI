@@ -1,5 +1,8 @@
 # Research Case Atlas — Attribution
 
+Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+Upstream notice: https://github.com/amazon-science/spot-diff/blob/main/NOTICE
+
 Original image material: Visual Anomaly (VisA), Amazon Science.
 Original dataset: https://github.com/amazon-science/spot-diff
 Dataset license: Creative Commons Attribution 4.0 International.

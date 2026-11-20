@@ -1,10 +1,18 @@
 # ForgeSight AI — CPU Runtime and Frozen Artifacts
 
-Status: release candidate documentation, 20 November 2026.
+Status: public application and source-release documentation, 20 November 2026.
 
-This guide describes the locally tested inference environment.
-It is not evidence of a clean-install reproduction or a public
-deployment.
+The [live application](https://forgesight-ai-6d5yatbeia-el.a.run.app/)
+runs genuine DINOv2 CPU inference on Google Cloud Run. Hosted
+synthetic-input checks succeeded for PCB1 through PCB4, and the
+project owner confirmed browser testing. These checks establish
+working inference and delivery, not real-world defect accuracy.
+
+The deployment uses a separate, private release context containing
+the authorized frozen runtime artifacts. Its Python source matches
+the released source baseline. The artifact-bearing deployment
+context, model binaries and original banks are not included in this
+repository. A source clone alone cannot reproduce the hosted service.
 
 ## Observed environment
 
@@ -26,10 +34,37 @@ deployment.
 | httpx | 0.28.1 |
 | pytest | 9.2.0 |
 
-The Python suite passed 227 tests and the frontend suite
-passed 67 tests on this environment. These do not establish
-clean-environment compatibility or close the numerical
-cross-platform reproduction discrepancy.
+At main commit `d68672e893fbe2a3934962c11f199d074079905b`, GitHub
+Actions passed 225 self-contained Python tests, 68 frontend tests,
+and the TypeScript production build. Six additional historical
+evidence integrity tests passed separately in the original local
+research environment. See the [test policy](CLEAN_CHECKOUT_TEST_POLICY.md).
+None of these checks closes the numerical cross-platform
+reproduction discrepancy or independently validates model accuracy.
+
+## Install the source and CPU requirements
+
+The verified source-CI setup uses Python 3.12 on Linux x86_64.
+From a fresh repository clone:
+
+```bash
+python3.12 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install --index-url https://download.pytorch.org/whl/cpu \
+  'torch==2.15.0+cpu' 'torchvision==0.29.2+cpu'
+python -m pip install -e '.[dev,service,inference,research]'
+python -m pip check
+python -m pytest -q --ignore=tests/test_m312b3_evidence_review.py
+```
+
+The `research` extra covers the additional dependencies used by
+source CI and current image-processing/evaluation utilities. Legacy
+ResNet experiments also require `timm` (observed locally: 1.0.31);
+the historical visual-atlas plotting script requires `matplotlib`.
+Those historical workflows also depend on their original research
+inputs and notebook state. Installing the source-CI extras is not a
+claim that every historical experiment has been cleanly reproduced.
 
 ## Original DINOv2-Small encoder
 
@@ -125,7 +160,8 @@ checked by the existing loader.
 These files are NOT included in the public source baseline.
 There is currently no verified public provisioning location for
 the four original banks. A fresh clone cannot perform genuine
-inference until these exact artifacts have been supplied.
+inference until these exact artifacts have been supplied through
+an authorized private provisioning process.
 
 Do not manufacture substitute banks or rebuild them from the
 16 public training-gallery photographs.
@@ -171,11 +207,22 @@ prove that GPU/CPU image scores are numerically identical.
 - The spatial surface does not reconstruct physical PCB height.
 - This is not a certified production quality-control system.
 
-## Deployment requirements still pending
+## Hosted verification and reproducibility boundary
 
-- Clean Linux CPU installation and dependency-resolution test
-- Verified and authorized provisioning of frozen banks
-- Runtime memory and inference-latency measurement
-- HTTPS routing for frontend and FastAPI under one origin
-- Upload limits, concurrency, health checks and error handling
-- Public end-to-end acceptance test across PCB1 through PCB4
+- Source installation and the declared CPU requirements passed on
+  a fresh GitHub Actions runner; source CI does not load real banks.
+- The separate Cloud Run release uses the original verified encoder
+  and all four frozen category banks. Real synthetic-input requests
+  returned inspection records, patch evidence and visualizations.
+- Public HTTPS, health and capabilities checks passed. The hosted
+  deployment hides `/api/v1/ready` and returns HTTP 404 there; the
+  source API retains a local readiness endpoint for operators.
+- The frontend build requires same-origin `/api` routing to FastAPI.
+  The live deployment provides this through its private packaging.
+- A publicly downloadable bank bundle and a source-only recreation
+  of the artifact-bearing Cloud Run context are not provided.
+
+The existing numerical gate remains open: 3 of 4 audited scores
+met the original tolerance, while all four review flags agreed.
+No thresholds, bank bytes or scientific acceptance criteria were
+changed to obtain the hosted deployment.

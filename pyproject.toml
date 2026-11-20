@@ -4,13 +4,18 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "forgesight-ai"
-version = "0.0.1"
+version = "0.1.0"
 description = "Research PCB anomaly inspection with verified CPU inference and human review"
 readme = "README.md"
 requires-python = ">=3.11"
 license = {file = "LICENSE"}
 authors = [{name = "ForgeSight AI contributors"}]
 dependencies = ["Pillow>=10,<13"]
+
+[project.urls]
+Homepage = "https://forgesight-ai-6d5yatbeia-el.a.run.app/"
+Repository = "https://github.com/ksuyamburaj07/ForgeSight-AI"
+Issues = "https://github.com/ksuyamburaj07/ForgeSight-AI/issues"
 
 [project.optional-dependencies]
 dev = [
@@ -25,8 +30,8 @@ service = [
     "pydantic>=2.10,<3",
 ]
 
-# Observed working Linux CPU environment, 2026-11-20.
-# Clean-environment installation remains a release gate.
+# Verified Linux CPU source-CI requirements, 2026-11-20.
+# Install the CPU PyTorch wheels first; see the runtime guide.
 inference = [
     "numpy==2.5.4",
     "torch==2.15.0",
