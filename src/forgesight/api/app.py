@@ -76,6 +76,26 @@ def health():
     }
 
 
+@app.get("/api/v1/ready")
+def readiness():
+    """Verify actual inference readiness, not just API liveness."""
+    try:
+        engine = get_engine()
+        engine.verify_all_banks()
+    except Exception as exc:
+        logger.exception("Frozen inference readiness failed")
+        raise HTTPException(
+            status_code=503,
+            detail="Inference runtime unavailable",
+        ) from exc
+
+    return {
+        "status": "ready",
+        "runtime_device": "cpu",
+        "categories": sorted(BANK_ROWS),
+    }
+
+
 @app.get("/api/v1/capabilities")
 def capabilities():
     return {

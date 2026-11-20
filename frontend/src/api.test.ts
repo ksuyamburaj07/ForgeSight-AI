@@ -245,15 +245,39 @@ test("HTTP busy, server detail, and non-string validation errors are understanda
   }
 });
 
+test("HTML proxy errors are actionable without JSON", async (t) => {
+  const cases = [
+    [413, /upload was rejected as too large/],
+    [429, /temporarily rate-limited/],
+    [502, /temporarily unavailable/],
+  ] as const;
+
+  for (const [status, expected] of cases) {
+    t.mock.method(globalThis, "fetch", async () =>
+      new Response("<html>Reverse proxy error</html>", {
+        status,
+        headers: { "Content-Type": "text/html" },
+      }),
+    );
+
+    await assert.rejects(
+      inspect(file(), "pcb1"),
+      expected,
+    );
+
+    t.mock.restoreAll();
+  }
+});
+
 test("unreadable and unreachable services report an error without evidence", async (t) => {
   t.mock.method(
     globalThis,
     "fetch",
-    async () => new Response("<html>unavailable</html>", { status: 502 }),
+    async () => new Response("<html>unavailable</html>", { status: 500 }),
   );
   await assert.rejects(
     inspect(file(), "pcb1"),
-    /unreadable response \(HTTP 502\)/,
+    /unreadable response \(HTTP 500\)/,
   );
   t.mock.restoreAll();
   t.mock.method(globalThis, "fetch", async () => {
@@ -261,7 +285,7 @@ test("unreadable and unreachable services report an error without evidence", asy
   });
   await assert.rejects(
     inspect(file(), "pcb1"),
-    /Cannot reach the local inspection service/,
+    /Cannot reach the inspection service/,
   );
 });
 
