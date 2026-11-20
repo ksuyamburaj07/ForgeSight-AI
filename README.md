@@ -341,6 +341,33 @@ See the
 before running or deploying the service.
 
 
+### Fresh-checkout and historical-evidence tests
+
+The Python source-checkout suite requires the optional
+`research` dependencies in addition to the service and
+inference dependencies.
+
+Use the exact PyTorch CPU wheels described in the
+[CPU runtime guide](docs/engineering/RELEASE_CPU_RUNTIME.md)
+before installing the Python package:
+
+```bash
+python -m pip install -e '.[dev,service,inference,research]'
+python -m pytest -q --ignore=tests/test_m312b3_evidence_review.py
+```
+
+The cleanroom source suite passed **225 tests** without
+the original dataset, frozen banks, or historical reports.
+
+Six additional M3.12B3 integrity tests require the original
+ignored reviewer worksheet and evidence summary. They passed
+in the original research environment but are **not included
+in the fresh-checkout test claim**.
+
+See the
+[Python test and evidence policy](docs/engineering/CLEAN_CHECKOUT_TEST_POLICY.md)
+for the distinction.
+
 ## 7. Repository organization
 
 | Path | Responsibility |
