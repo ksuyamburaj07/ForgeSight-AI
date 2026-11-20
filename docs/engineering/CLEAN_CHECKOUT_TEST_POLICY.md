@@ -1,15 +1,16 @@
 # Clean-checkout Python testing and historical evidence
 
-Status: November 2026, M3.21C.
+Status: public source-release verification, 20 November 2026.
 
 ## Verified fresh source checkout
 
-The GitHub main commit tested was:
+The GitHub main commit verified by both source-CI workflows was:
 
-`67460701a7c896b906e617070bec45df83a65659`
+`d68672e893fbe2a3934962c11f199d074079905b`
 
-The independent Linux cleanroom used Python 3.12 and
-the declared CPU inference requirements.
+The Python workflow used Ubuntu 24.04, Python 3.12,
+and the declared CPU inference requirements. An earlier
+separate Linux cleanroom also verified source installation.
 
 Research dependencies additionally verified:
 
@@ -19,11 +20,24 @@ Research dependencies additionally verified:
 
 With those dependencies installed, 225 self-contained
 Python tests passed without the original data, frozen banks,
-or historical reports.
+or historical reports. The frontend workflow passed 68 Node
+tests and the TypeScript/Vite production build using Node 24
+and `npm ci`.
 
-The cleanroom tests exercise source-code contracts and
+Workflow definitions:
+
+- [Python source CI](../../.github/workflows/python-ci.yml)
+- [Frontend CI](../../.github/workflows/frontend-ci.yml)
+
+The source-CI and cleanroom tests exercise source-code contracts and
 mocked service boundaries; they do not constitute real
 inference or independent scientific evaluation.
+
+The `research` extra supplies the additional source-CI dependencies.
+Legacy ResNet scripts separately require `timm`, and historical
+visual-atlas plotting requires `matplotlib` plus the original
+research context. The CI result does not establish reproduction
+of every historical script or experiment.
 
 ## Historical evidence tests
 
@@ -69,10 +83,21 @@ the original verified files are available.
 Do not describe source-only CI as a full frozen-inference
 reproduction, benchmark rerun, or independent validation.
 
-## Remaining release gates
+## Hosted checks and the scientific boundary
 
-- Verify the new Python CI on a fresh GitHub Actions runner
-- Perform genuine inference on the target Linux server
-- Verify the exact original frozen banks on that server
-- Retain the open 3-of-4 numerical reproduction disclosure
-- Test public HTTPS routing and CPU-service safeguards
+The separate private Cloud Run release context contains the
+authorized original encoder and frozen banks; those artifacts
+are not in this source repository. Genuine hosted CPU inference
+was checked with synthetic inputs for all four PCB categories,
+public HTTPS checks passed, and the project owner confirmed
+browser testing of the [live application](https://forgesight-ai-6d5yatbeia-el.a.run.app/).
+
+Hosted integration checks are separate from source CI. Synthetic
+inputs demonstrate that the system executes; they do not measure
+real-world anomaly-detection accuracy. The historical 802-case
+evaluation is retrospective and non-independent.
+
+The strict CPU cross-platform numerical score gate remains open:
+3 of 4 audited cases met the original tolerance, and all four
+review flags agreed. The system remains human supervised and
+is not certified for autonomous manufacturing decisions.

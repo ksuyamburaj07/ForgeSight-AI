@@ -3,6 +3,13 @@
 
 Status: uninstalled deployment templates, November 2026.
 
+Historical VPS option: the active application now runs on Google Cloud Run.
+See the [public deployment record](PUBLIC_DEPLOYMENT.md) and
+[current runtime guide](RELEASE_CPU_RUNTIME.md). The Nginx limits and systemd
+topology below were not installed on Cloud Run and must not be presented
+as protections verified on the live service. The remaining gates below
+belong to this proposed VPS deployment.
+
 These files define the proposed deployment topology.
 They are not proof of a successful cloud installation.
 
