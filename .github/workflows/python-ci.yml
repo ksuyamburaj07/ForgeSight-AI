@@ -1,0 +1,50 @@
+name: ForgeSight Python Source CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-tests:
+    name: Clean Python source regression
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Install CPU PyTorch wheels
+        run: |
+          python -m pip install --no-cache-dir \
+            --index-url https://download.pytorch.org/whl/cpu \
+            "torch==2.15.0+cpu" \
+            "torchvision==0.29.2+cpu"
+
+      - name: Install declared Python dependencies
+        run: |
+          python -m pip install --no-cache-dir \
+            -e '.[dev,service,inference,research]'
+
+      - name: Check installed requirements and CPU runtime
+        run: |
+          python -m pip check
+          python -c "import torch; assert torch.version.cuda is None"
+
+      - name: Run self-contained source regression
+        run: |
+          PYTHONDONTWRITEBYTECODE=1 python -m pytest -q \
+            --ignore=tests/test_m312b3_evidence_review.py

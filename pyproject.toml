@@ -37,6 +37,14 @@ inference = [
     "tokenizers==0.22.2",
 ]
 
+# Historical image-processing and evaluation utilities.
+# Verified in the November 2026 Linux cleanroom.
+research = [
+    "opencv-python-headless==4.14.0.94",
+    "scikit-learn==1.9.1",
+    "scipy==1.18.1",
+]
+
 [project.scripts]
 forgesight = "forgesight.cli:main"
 
